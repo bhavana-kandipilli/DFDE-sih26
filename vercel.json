@@ -1,5 +1,4 @@
 {
-  "installCommand": "pip install --disable-pip-version-check -r requirements.vercel.txt",
   "buildCommand": "python -m compileall backend api ml || true",
   "functions": {
     "api/**/*.py": {

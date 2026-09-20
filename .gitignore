@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+
+# Environment/secrets
+.env
+.env.*
+!.env.example
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Local evidence storage
+storage/evidence/raw/
+storage/evidence/calibrated/
+storage/evidence/patches/
+
+# Generated files
+*.log
+.DS_Store

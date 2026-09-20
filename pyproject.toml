@@ -1,0 +1,25 @@
+[project]
+name = "digital-field-drug-evidence"
+version = "1.0.0"
+description = "Digital Field Drug Evidence System (DFDE) - FastAPI Backend"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "pydantic>=2.0.0",
+    "sqlalchemy>=2.0.0",
+    "opencv-python-headless>=4.8.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "openpyxl>=3.1.0",
+    "scikit-learn>=1.3.0",
+    "joblib>=1.3.0",
+    "bcrypt>=4.0.0",
+    "pyjwt>=2.8.0",
+    "requests>=2.31.0",
+    "python-multipart>=0.0.6",
+]
+
+[tool.vercel]
+entrypoint = "backend.app.main:app"

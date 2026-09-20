@@ -1,0 +1,13 @@
+{
+  "target_size": [
+    224,
+    224
+  ],
+  "feature_dim": 21,
+  "color_spaces": [
+    "RGB",
+    "HSV",
+    "CIELAB"
+  ],
+  "normalization": "StandardScaler"
+}

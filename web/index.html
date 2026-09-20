@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFDE - Digital Field Drug Evidence System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2026_med">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SCREEN 1: OFFICER LOGIN (Field Evidence Capture)
+       ========================================================================== -->
+  <div id="viewLogin" class="login-page-container">
+    <!-- Brand Header -->
+    <div class="login-brand-header">
+      <div class="login-logo-row">
+        <svg class="login-logo-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+        </svg>
+        <span class="login-logo-title">DFDE</span>
+      </div>
+      <div class="login-app-title">Digital Field Drug Evidence</div>
+      <div class="login-app-motto">Field Evidence Verification • Forensic Chain of Custody</div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+      <h2 class="login-card-title">Field Officer Login</h2>
+      <p class="login-card-subtitle">Access your account to record digital field drug evidence</p>
+
+      <form id="formLogin">
+        <!-- Officer ID input with icon -->
+        <div class="input-icon-group">
+          <svg class="input-leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" id="loginOfficerId" class="input-with-icon" value="officer1" placeholder="Officer ID / Badge Number" required autocomplete="username">
+        </div>
+
+        <!-- Password input with icon and toggle -->
+        <div class="input-icon-group">
+          <svg class="input-leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="loginPassword" class="input-with-icon" value="fieldpass123" placeholder="Password" required autocomplete="current-password">
+          <button type="button" class="input-trailing-action" id="btnTogglePassword" title="Toggle password visibility">
+            <svg id="pwdEyeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-login-submit">Login</button>
+
+        <div class="login-security-notice">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+          </svg>
+          <span>Certified Forensic Field Examination Standard</span>
+        </div>
+
+        <div class="login-quick-links">
+          <button type="button" class="btn-quick-fill" onclick="officerApp.fillCredentials('officer1', 'fieldpass123')">
+            Quick Fill: officer1
+          </button>
+          <div>
+            <a href="analyst.html" class="portal-switch-text">Switch to Forensic Laboratory Portal →</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Gentle Wave Graphic at bottom (Medical Blue Tones) -->
+    <svg class="login-wave-bg" viewBox="0 0 1440 170" fill="none" preserveAspectRatio="none">
+      <path d="M0 60C240 120 480 20 720 70C960 120 1200 30 1440 80V170H0V60Z" fill="#E0F2FE" opacity="0.85"/>
+      <path d="M0 90C360 40 720 140 1080 70C1260 35 1380 60 1440 80V170H0V90Z" fill="#BAE6FD" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <!-- ==========================================================================
+       AUTHENTICATED APP SHELL (Sidebar + Top Bar + Views)
+       ========================================================================== -->
+  <div id="appMainLayout" class="app-layout hidden">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="app-sidebar">
+      <a href="#" class="sidebar-brand" onclick="officerApp.navTo('viewDashboard'); return false;">
+        <svg class="sidebar-logo-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+        </svg>
+        <span class="sidebar-logo-text">DFDE</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-item active" id="navDashboard" onclick="officerApp.navTo('viewDashboard'); return false;">
+          <span class="sidebar-item-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navCases" onclick="officerApp.navTo('viewCasesList'); return false;">
+          <span class="sidebar-item-icon">📁</span>
+          <span>Cases</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navPendingSync" onclick="officerApp.navTo('viewPendingSync'); return false;">
+          <span class="sidebar-item-icon">☁️</span>
+          <span>Pending Sync</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navProfile" onclick="officerApp.navTo('viewProfile'); return false;">
+          <span class="sidebar-item-icon">👤</span>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="analyst.html" class="sidebar-portal-link" title="Open Forensic Analyst Portal">Analyst Portal →</a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-left-block">
+          <button id="btnOfflineToggle" class="offline-status-pill online" type="button" title="Toggle Disconnected Field Operation">
+            <span id="offlineDot"></span> <span id="offlineText">ONLINE</span>
+          </button>
+          <span class="status-pill-badge active-status" style="font-size: 0.74rem;">FIELD EVIDENCE UNIT</span>
+        </div>
+
+        <div class="header-right-block">
+          <div class="user-profile-widget" style="cursor: pointer;" onclick="officerApp.navTo('viewProfile')" title="View Officer Profile">
+            <div class="user-avatar-circle" id="userAvatarInitials">--</div>
+            <div class="user-meta-column">
+              <span class="user-display-name" id="officerDisplayName">--</span>
+              <span class="user-badge-id" id="officerBadgeDisplay">--</span>
+            </div>
+          </div>
+          <button id="btnLogout" class="btn-header-logout" type="button" title="Log out of session">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+
+        <!-- ==========================================================================
+             SCREEN 2: OFFICER DASHBOARD (Simple & Focused)
+             ========================================================================== -->
+        <section id="viewDashboard" class="view-panel active">
+          
+          <!-- Pending Sync Banner (Shown only when offline records exist) -->
+          <div id="pendingSyncBanner" class="pending-sync-alert-banner hidden">
+            <div>
+              <span>⚠️ <strong id="pendingSyncCount">0</strong> evidence record(s) pending sync</span>
+            </div>
+            <button id="btnSyncNow" class="btn btn-sm btn-primary" type="button">SYNC NOW</button>
+          </div>
+
+          <!-- Hero Greeting -->
+          <div class="dashboard-hero">
+            <h1 class="dashboard-title" id="dashboardGreeting">Good morning, Officer!</h1>
+            <p class="dashboard-subtitle">Capture field evidence and maintain chain of custody.</p>
+          </div>
+
+          <!-- Large + Create New Case Button -->
+          <button id="btnOpenNewCase" class="btn-create-case-action" type="button">
+            <span style="font-size: 1.25rem; font-weight: 700; line-height: 1;">+</span>
+            <span>Create New Case</span>
+          </button>
+
+          <!-- 3 Stat Cards Row -->
+          <div class="stats-row-grid">
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper blue">
+                📄
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statTotalCases">0</div>
+                <div class="stat-label-text">Total Cases</div>
+              </div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper amber">
+                ☁️
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statPendingSync">0</div>
+                <div class="stat-label-text">Pending Sync</div>
+              </div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper green">
+                
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statSynced">0</div>
+                <div class="stat-label-text">Synced</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Cases Section -->
+          <div class="section-header-row">
+            <h2 class="section-heading-text">Recent Cases</h2>
+            <a href="#" class="section-link-action" onclick="officerApp.navTo('viewCasesList'); return false;">View All →</a>
+          </div>
+
+          <!-- Table Container -->
+          <div class="clean-table-card">
+            <table class="data-table" id="casesTable">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Date</th>
+                  <th>Tests</th>
+                  <th>Status</th>
+                  <th>Sync Status</th>
+                </tr>
+              </thead>
+              <tbody id="casesTbody">
+                <!-- Dynamically populated from real DB -->
+              </tbody>
+            </table>
+
+            <!-- Honest Empty State -->
+            <div id="casesEmptyState" class="clean-empty-state hidden">
+              <div class="empty-state-icon">📋</div>
+              <h3 class="empty-state-title">No cases yet</h3>
+              <p class="empty-state-desc">Create your first field case to begin evidence capture.</p>
+              <button class="btn btn-primary" onclick="officerApp.openCreateCaseModal()">+ Create Case</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             OFFICER VIEW: CASES REPOSITORY
+             ========================================================================== -->
+        <section id="viewCasesList" class="view-panel hidden">
+          <div class="dashboard-hero" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div>
+              <h1 class="dashboard-title">Field Evidence Cases</h1>
+              <p class="dashboard-subtitle">Master investigative repository of all recorded field cases.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewDashboard')">← Back to Dashboard</button>
+              <button class="btn btn-primary btn-sm" onclick="officerApp.openCreateCaseModal()">+ New Case</button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div class="search-container-box" style="margin-bottom: 1.25rem;">
+            <input type="text" id="officerCasesSearch" class="search-input-field" placeholder="Filter cases by case reference or location..." oninput="officerApp.filterCasesList(this.value)">
+            <span class="search-icon-btn">🔍</span>
+          </div>
+
+          <!-- Cases Table -->
+          <div class="clean-table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Tests</th>
+                  <th>Status</th>
+                  <th>Sync State</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="allCasesListTbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             OFFICER VIEW: PENDING SYNC & OFFLINE VAULT
+             ========================================================================== -->
+        <section id="viewPendingSync" class="view-panel hidden">
+          <div class="dashboard-hero" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div>
+              <h1 class="dashboard-title">Offline Evidence Vault & Sync</h1>
+              <p class="dashboard-subtitle">Locally encrypted storage and central transmission pipeline.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewDashboard')">← Back to Dashboard</button>
+          </div>
+
+          <div class="stats-row-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper blue">🔒</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" style="font-size: 1.35rem; font-weight: 800; color: var(--color-primary);">AES-256</div>
+                <div class="stat-label-text">Vault Encryption</div>
+              </div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper amber">⏳</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="pendingVaultCount">0</div>
+                <div class="stat-label-text">Pending Transmission</div>
+              </div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper green">⚡</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="vaultNetStatus" style="font-size: 1.35rem; font-weight: 800; color: var(--color-success);">ONLINE</div>
+                <div class="stat-label-text">Connection State</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="clean-table-card" style="margin-bottom: 1.5rem;">
+            <div style="padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #F8FBFE;">
+              <strong style="color: var(--text-main); font-size: 0.95rem;">Pending Evidence Transmission Queue</strong>
+              <button class="btn btn-primary btn-sm" onclick="officerApp.syncOfflineQueue()">⚡ Synchronize All Now</button>
+            </div>
+            <div id="pendingSyncQueueList" style="padding: 1.25rem;">
+              <!-- Dynamically populated or clean empty notice -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             OFFICER VIEW: PROFILE & DEVICE DIAGNOSTICS
+             ========================================================================== -->
+        <section id="viewProfile" class="view-panel hidden">
+          <div class="workflow-card" style="max-width: 680px; margin: 0 auto;">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Field Officer Profile</h2>
+                <p class="workflow-card-subtitle">Officer Credentials & Field Terminal Status</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewDashboard')">← Back to Dashboard</button>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: var(--radius-md); padding: 1.25rem;">
+              <div class="user-avatar-circle" style="width: 64px; height: 64px; font-size: 1.5rem;" id="profAvatarInitials">--</div>
+              <div>
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);" id="profName">--</h3>
+                <div style="color: var(--color-primary); font-weight: 700; font-size: 0.85rem;" id="profBadge">--</div>
+                <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.2rem;" id="profAgency">--</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.88rem;">
+              <div style="background: #F8FBFE; border: 1px solid var(--border-color); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Assigned Role</div>
+                <div style="font-weight: 700; color: var(--text-main); margin-top: 0.25rem;">FIELD_OFFICER</div>
+                <div style="font-size: 0.75rem; color: var(--status-positive-text); margin-top: 0.25rem;">✓ Authorized Mobile Capture & Hash</div>
+              </div>
+              <div style="background: #F8FBFE; border: 1px solid var(--border-color); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Terminal Device ID</div>
+                <div style="font-weight: 700; color: var(--color-primary); margin-top: 0.25rem; font-family: var(--font-mono);">FIELD-TERMINAL-ALPHA</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Encrypted Local SQLite Vault</div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+              <button class="btn btn-secondary" onclick="officerApp.navTo('viewDashboard')">← Back to Dashboard</button>
+              <button class="btn btn-secondary" onclick="officerApp.logout()" style="color: var(--color-danger); border-color: #FECACA;">Logout</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: CREATE CASE MODAL
+             ========================================================================== -->
+        <div id="modalCreateCase" class="modal-overlay">
+          <div class="modal-box">
+            <button class="modal-close" onclick="officerApp.closeCreateCaseModal()">&times;</button>
+            <h2 class="workflow-card-title" style="margin-bottom: 0.25rem;">Create New Case</h2>
+            <p class="workflow-card-subtitle" style="margin-bottom: 1.25rem;">Initialize a secure digital case record.</p>
+
+            <form id="formCreateCase">
+              <div class="form-group">
+                <label class="form-label" for="caseRef">Case Reference</label>
+                <input type="text" id="caseRef" class="form-input" placeholder="e.g. DFDE-2026-005" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="caseLocation">Location</label>
+                <input type="text" id="caseLocation" class="form-input" placeholder="e.g. Port Terminal, Berth 3" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date & Time</label>
+                <input type="text" id="caseAutoDateTime" class="form-input" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Officer</label>
+                <input type="text" id="caseAutoOfficer" class="form-input" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="caseNotes">Incident Notes</label>
+                <textarea id="caseNotes" class="form-textarea" rows="2" placeholder="Field observations..."></textarea>
+              </div>
+              <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem;">
+                <button type="button" class="btn btn-secondary" onclick="officerApp.closeCreateCaseModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">CREATE CASE</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             WORKFLOW: CASE SCREEN (List Tests, Add Test)
+             ========================================================================== -->
+        <section id="viewCaseScreen" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title" id="caseScreenTitle">Case Details</h2>
+                <p class="workflow-card-subtitle" id="caseScreenSubtitle">Case Information & Chain of Custody</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewDashboard')">← Back to Cases</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">LOCATION</span>
+                <div id="caseInfoLocation" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">DATE</span>
+                <div id="caseInfoDate" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">OFFICER</span>
+                <div id="caseInfoOfficer" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">STATUS</span>
+                <div id="caseInfoStatus"><span class="status-pill-badge synced">ACTIVE</span></div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="font-size: 1.05rem; font-weight: 700;">Tests</h3>
+              <button id="btnAddTest" class="btn btn-primary" type="button">+ ADD TEST</button>
+            </div>
+
+            <div id="testsListContainer" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Tests list -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: SELECT TEST REAGENT
+             ========================================================================== -->
+        <section id="viewSelectTest" class="view-panel hidden">
+          <div class="workflow-card" style="max-width: 560px; margin: 1.5rem auto;">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Select Field Test</h2>
+                <p class="workflow-card-subtitle">Choose the presumptive test kit in use</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewCaseScreen')">Cancel</button>
+            </div>
+
+            <form id="formSelectTest">
+              <div class="form-group">
+                <label class="form-label" for="selectTestType">Presumptive Test Kit</label>
+                <select id="selectTestType" class="form-select" required>
+                  <option value="idPAD 12-Lane Paper Analytical Device">idPAD 12-Lane Paper Analytical Device</option>
+                  <option value="Cobalt Thiocyanate (Scott Test)">Cobalt Thiocyanate (Scott Test)</option>
+                  <option value="Marquis Reagent Spot Test">Marquis Reagent Spot Test</option>
+                  <option value="Liebermann Reagent Spot Test">Liebermann Reagent Spot Test</option>
+                </select>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">
+                  Calibrated model trained on analytical chemometric datasets (PMC7332374).
+                </p>
+              </div>
+
+              <div style="margin-top: 1.5rem;">
+                <button type="submit" class="btn btn-primary btn-block">PROCEED TO SMART CAPTURE →</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: SMART CAPTURE SCREEN
+             ========================================================================== -->
+        <section id="viewSmartCapture" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Smart Capture</h2>
+                <p class="workflow-card-subtitle" id="captureTestTitle">Test: idPAD 12-Lane</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.stopCamera(); officerApp.navTo('viewSelectTest')">← Back</button>
+            </div>
+
+            <!-- Viewfinder -->
+            <div class="camera-view-container">
+              <video id="cameraVideo" class="camera-stream" autoplay playsinline muted></video>
+              <canvas id="cameraCanvas" class="camera-canvas"></canvas>
+
+              <div class="camera-overlay">
+                <div class="overlay-target-reaction">
+                  REACTION AREA (12 LANES)
+                </div>
+                <div class="overlay-target-card">
+                  REFERENCE CARD / FIDUCIAL MARKERS
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Guidance Banner -->
+            <div id="qualityGuidanceBanner" class="quality-guidance-banner acceptable">
+              <span id="qualityGuidanceIcon">🔍</span>
+              <span id="qualityGuidanceText">Align card within framing guides...</span>
+            </div>
+
+            <!-- Quality Checklist -->
+            <div class="quality-checklist">
+              <div class="quality-check-item" id="qcCard">
+                <span>Reference Card</span>
+                <span class="qc-status">⏳</span>
+              </div>
+              <div class="quality-check-item" id="qcReaction">
+                <span>Reaction Area</span>
+                <span class="qc-status">⏳</span>
+              </div>
+              <div class="quality-check-item" id="qcFocus">
+                <span>Focus & Sharpness</span>
+                <span class="qc-status">⏳</span>
+              </div>
+              <div class="quality-check-item" id="qcLighting">
+                <span>Lighting & Exposure</span>
+                <span class="qc-status">⏳</span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <button id="btnSwitchLens" class="btn btn-secondary" type="button">🔄 Switch Lens</button>
+              <input type="file" id="filePicker" accept="image/*" style="display: none;">
+              <button id="btnPickFile" class="btn btn-secondary" type="button">📁 Upload Photo</button>
+              <button id="btnCapturePhoto" class="btn btn-capture" type="button" disabled>● Capture</button>
+            </div>
+
+            <!-- Real Presumptive Dataset Captures (PMC7332374 / Wiley DTA.1949) -->
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                <span style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">🔬 Real Scientific Dataset Samples (PMC7332374 / Berrien County Crime Lab):</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); background: var(--border-subtle); padding: 2px 8px; border-radius: 12px;">Zero Mock Data • Real-Time Pipeline</span>
+              </div>
+
+              <!-- Dataset Dropdown Selector -->
+              <div style="margin-bottom: 0.75rem;">
+                <select id="selectRealDatasetSample" class="form-input" style="width: 100%; font-size: 0.85rem; font-weight: 500; cursor: pointer; padding: 0.6rem 0.8rem;" onchange="officerApp.handleDatasetSelect(this.value)">
+                  <option value="">-- Choose Authentic Dataset Sample for Real-Time Analysis --</option>
+                  <option value="/static/samples/image42.jpeg">Sample #3R9 — Cocaine HCl 100% Pure (GC-MS & FTIR Confirmed Presumptive Positive)</option>
+                  <option value="/static/samples/image70.jpeg">Sample #6JZ — Heroin 50% / Lactose 50% (GC-MS Confirmed Opiate • Borderline Zone)</option>
+                  <option value="/static/samples/image109.jpeg">Sample #CQK — Methamphetamine 50% / DMSO2 50% (Marquis & Simon Confirmed)</option>
+                  <option value="/static/samples/image35.jpeg">Sample #33P — Pure Lactose Excipient Blank (0% Drug • Presumptive Negative Baseline)</option>
+                  <option value="/static/samples/image56.jpeg">Sample #4WZ — Dimethyl Sulfone Cutting Agent Blank (0% Drug • Negative Baseline)</option>
+                  <option value="/static/samples/image121.jpeg">Sample #DSW — Optical Anomaly Card (Triggers Out-of-Distribution Safety Gate)</option>
+                </select>
+              </div>
+
+              <!-- Quick Action Pills -->
+              <div style="display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image42.jpeg', 'Sample #3R9 (Cocaine HCl 100%)', 'Cocaine Hydrochloride (100% Pure)', 'Berrien County Crime Lab (GC-MS / FTIR)')">🧪 Cocaine HCl 100%</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image70.jpeg', 'Sample #6JZ (Heroin 50%)', 'Diacetylmorphine / Lactose (50:50)', 'Berrien County Crime Lab (GC-MS / FTIR)')">🧪 Heroin 50%</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image109.jpeg', 'Sample #CQK (Meth 50%)', 'Methamphetamine / DMSO2 (50:50)', 'Berrien County Crime Lab (GC-MS / FTIR)')">🧪 Meth 50%</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image35.jpeg', 'Sample #33P (Lactose Blank)', 'Pure Lactose Excipient (0% Drug)', 'Berrien County Crime Lab (Negative Baseline)')">🧪 Lactose Blank</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image56.jpeg', 'Sample #4WZ (DMSO2 Blank)', 'Dimethyl Sulfone Blank (0% Drug)', 'Berrien County Crime Lab (Negative Baseline)')">🧪 DMSO2 Blank</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="officerApp.loadPreset('/static/samples/image121.jpeg', 'Sample #DSW (Optical Anomaly)', 'Severe Optical Distortion', 'PMC7332374 Safety Gate Validation')">⚠️ Optical OOD</button>
+              </div>
+
+              <!-- Active Sample Ground Truth Metadata Box -->
+              <div id="sampleMetaBox" class="hidden" style="margin-top: 0.75rem; background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: var(--radius-md); padding: 0.6rem 0.85rem; text-align: left; font-size: 0.8rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                  <strong style="color: #0369A1;" id="metaSampleTitle">Sample Selected</strong>
+                  <span style="color: #0284C7; background: #E0F2FE; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;" id="metaLabConf">Lab Verified</span>
+                </div>
+                <div style="color: #0C2340; font-size: 0.78rem;">
+                  Substance: <span id="metaSubstance" style="font-weight: 600;">--</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: QUALITY GATE & CALIBRATION CHECK
+             ========================================================================== -->
+        <section id="viewQualityGate" class="view-panel hidden">
+          <div class="workflow-card" style="max-width: 540px; margin: 1.5rem auto; text-align: center;">
+            <div id="gatePassBox">
+              <div style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--color-success);">✓</div>
+              <h2 class="workflow-card-title">Image Quality Acceptable</h2>
+              <p class="workflow-card-subtitle" style="margin-bottom: 1.25rem;">Reference card detected and lighting verified.</p>
+
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md); text-align: left; margin-bottom: 1.5rem;">
+                <h4 style="font-size: 0.92rem; font-weight: 700; margin-bottom: 0.5rem;">Colour Calibration</h4>
+                <div style="color: var(--status-positive-text); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.25rem;">✓ Reference card detected</div>
+                <div style="color: var(--status-positive-text); font-size: 0.88rem; font-weight: 600;">✓ Colour calibration completed</div>
+              </div>
+
+              <button id="btnContinueToAnalysis" class="btn btn-primary btn-block">Continue to Analysis →</button>
+            </div>
+
+            <div id="gateFailBox" class="hidden">
+              <div style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--color-danger);">⚠️</div>
+              <h2 class="workflow-card-title">Image Quality Needs Improvement</h2>
+              <p id="gateFailReason" style="color: var(--color-danger); font-weight: 600; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                Reference card not detected.
+              </p>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Please include the reference card and capture the image again.
+              </p>
+              <button class="btn btn-primary" onclick="officerApp.retakePhoto()">Retake Photo</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: AI ANALYSIS PROGRESS
+             ========================================================================== -->
+        <section id="viewAnalyzing" class="view-panel hidden">
+          <div class="workflow-card" style="max-width: 480px; margin: 2.5rem auto; text-align: center;">
+            <h2 class="workflow-card-title" style="margin-bottom: 1rem;">Analyzing evidence...</h2>
+            
+            <div style="text-align: left; max-width: 280px; margin: 1.5rem auto; display: flex; flex-direction: column; gap: 0.75rem;">
+              <div id="anStep1" style="display: flex; justify-content: space-between; font-weight: 600;">
+                <span>Checking image</span> <span style="color: var(--color-success);">✓</span>
+              </div>
+              <div id="anStep2" style="display: flex; justify-content: space-between; font-weight: 600;">
+                <span>Applying colour calibration</span> <span style="color: var(--color-success);">✓</span>
+              </div>
+              <div id="anStep3" style="display: flex; justify-content: space-between; font-weight: 600;">
+                <span>Running AI model</span> <span id="anIconModel" style="color: var(--color-primary);">●</span>
+              </div>
+              <div id="anStep4" style="display: flex; justify-content: space-between; font-weight: 600; color: var(--text-muted);">
+                <span>Checking confidence</span> <span id="anIconConf">○</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: PRESUMPTIVE RESULT SCREEN
+             ========================================================================== -->
+        <section id="viewResult" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">FIELD TEST RESULT</span>
+                <h2 class="workflow-card-title" id="resClassificationTitle" style="font-size: 1.65rem; margin-top: 0.25rem;">PRESUMPTIVE POSITIVE</h2>
+              </div>
+              <span class="status-pill-badge synced" id="resBadgeTag">PRESUMPTIVE</span>
+            </div>
+
+            <div id="resCalloutBox" style="background: var(--status-positive-bg); border: 1px solid #bbf7d0; padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+              <div style="font-weight: 800; font-size: 1.1rem; color: var(--status-positive-text);" id="resCalloutText">PRESUMPTIVE POSITIVE</div>
+              <div style="font-size: 0.88rem; color: #166534;" id="resReasonText">High calibrated probability of presumptive reaction.</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">CONFIDENCE</span>
+                <div id="resConfidence" style="font-size: 1.6rem; font-weight: 800; color: var(--color-primary);">--%</div>
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Actual calibrated model output</span>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">TEST TYPE</span>
+                <div id="resTestType" style="font-weight: 700; margin-top: 0.25rem;">--</div>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">MODEL</span>
+                <div id="resModelVersion" style="font-weight: 700; margin-top: 0.25rem;">v1.0.0-idpad</div>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">IMAGE QUALITY</span>
+                <div style="color: var(--status-positive-text); font-weight: 700; margin-top: 0.25rem;">✓ Acceptable</div>
+              </div>
+            </div>
+
+            <div class="statutory-disclaimer">
+              <strong>⚖️ SCIENTIFIC & LEGAL NOTICE:</strong> This output represents an automated interpretation of a presumptive field test reaction. The system DOES NOT claim that AI has conclusively identified a drug. Confirmatory laboratory testing (GC-MS / LC-MS) remains legally required.
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+              <button id="btnReviewEvidence" class="btn btn-primary" type="button">Review Evidence →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: EVIDENCE REVIEW SCREEN
+             ========================================================================== -->
+        <section id="viewReviewEvidence" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Review Evidence</h2>
+                <p class="workflow-card-subtitle">Inspect record before permanently finalizing</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="officerApp.navTo('viewResult')">← Back to Result</button>
+            </div>
+
+            <div class="evidence-images-grid">
+              <div class="evidence-thumb-card">
+                <img id="revImgRaw" alt="Original Capture">
+                <div class="evidence-thumb-label">Original Image</div>
+              </div>
+              <div class="evidence-thumb-card">
+                <img id="revImgCalib" alt="Calibrated Capture">
+                <div class="evidence-thumb-label">Calibrated Image</div>
+              </div>
+              <div class="evidence-thumb-card">
+                <img id="revImgPatch" alt="Reaction Zone">
+                <div class="evidence-thumb-label">Reaction Region</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+              <table class="data-table" style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                <tbody>
+                  <tr><td style="font-weight: 600; width: 35%;">Test Type</td><td id="revTestType">--</td></tr>
+                  <tr><td style="font-weight: 600;">AI Result</td><td id="revClassification" style="font-weight: 700;">--</td></tr>
+                  <tr><td style="font-weight: 600;">Confidence</td><td id="revConfidence">--</td></tr>
+                  <tr><td style="font-weight: 600;">Image Quality</td><td>✓ Acceptable</td></tr>
+                  <tr><td style="font-weight: 600;">Reference Card</td><td>✓ Detected</td></tr>
+                  <tr><td style="font-weight: 600;">Calibration</td><td>✓ Completed</td></tr>
+                  <tr><td style="font-weight: 600;">Timestamp</td><td id="revTimestamp">--</td></tr>
+                  <tr><td style="font-weight: 600;">Officer</td><td id="revOfficer">--</td></tr>
+                  <tr><td style="font-weight: 600;">Location</td><td id="revLocation">--</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button id="btnFinalizeEvidence" class="btn btn-primary btn-block" type="button">
+              Finalize Evidence →
+            </button>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             WORKFLOW: EVIDENCE INTEGRITY SCORE & CRYPTO
+             ========================================================================== -->
+        <section id="viewEvidenceIntegrity" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Evidence Integrity</h2>
+                <p class="workflow-card-subtitle">Cryptographic reliability score of the digital evidence record</p>
+              </div>
+            </div>
+
+            <div class="integrity-score-display">
+              <div id="integrityScoreVal">--</div>
+              <span>/ 100</span>
+            </div>
+
+            <ul class="integrity-checks-list" id="integrityChecksList">
+              <li>✓ Officer authenticated</li>
+              <li>✓ Timestamp recorded</li>
+              <li>✓ Location recorded</li>
+              <li>✓ Reference card detected</li>
+              <li>✓ Image quality acceptable</li>
+              <li>✓ Model version recorded</li>
+              <li>✓ Evidence hash generated</li>
+              <li>✓ Metadata complete</li>
+            </ul>
+
+            <div style="background: var(--border-subtle); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem;">Evidence Secured</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">SHA-256 hash generated:</p>
+              <div class="hash-box" id="finalSha256Box">--</div>
+              <div style="color: var(--status-positive-text); font-weight: 600; font-size: 0.85rem; margin-top: 0.5rem;">
+                ✓ Evidence integrity protected
+              </div>
+            </div>
+
+            <!-- Storage status notice -->
+            <div id="storageStatusBox" class="quality-guidance-banner acceptable" style="margin-bottom: 1.5rem;">
+              <span id="storageStatusIcon">✓</span>
+              <span id="storageStatusText">Evidence saved securely. Status: SYNCED</span>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+              <button class="btn btn-secondary" onclick="officerApp.viewActiveCase()">View Case</button>
+              <button class="btn btn-primary" onclick="officerApp.doneWorkflow()">Done</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="officer.js?v=2026_real_data"></script>
+</body>
+</html>

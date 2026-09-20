@@ -1,0 +1,169 @@
+{
+  "dataset_version": "v1.0-forensic-idpad-nir",
+  "model_version": "v1.0.0-presumptive-idpad",
+  "candidate_models": [
+    {
+      "model_name": "Logistic_Regression",
+      "accuracy": 0.8596,
+      "balanced_accuracy": 0.823,
+      "precision": 0.8537,
+      "recall_sensitivity": 0.9459,
+      "specificity": 0.7,
+      "f1_score": 0.8974,
+      "roc_auc": 0.8959,
+      "pr_auc": 0.9381,
+      "latency_ms": 0.044,
+      "confusion_matrix": [
+        [
+          14,
+          6
+        ],
+        [
+          2,
+          35
+        ]
+      ],
+      "model_size_kb": 0.92
+    },
+    {
+      "model_name": "Random_Forest",
+      "accuracy": 0.8246,
+      "balanced_accuracy": 0.8074,
+      "precision": 0.8649,
+      "recall_sensitivity": 0.8649,
+      "specificity": 0.75,
+      "f1_score": 0.8649,
+      "roc_auc": 0.8486,
+      "pr_auc": 0.8969,
+      "latency_ms": 2.691,
+      "confusion_matrix": [
+        [
+          15,
+          5
+        ],
+        [
+          5,
+          32
+        ]
+      ],
+      "model_size_kb": 891.96
+    },
+    {
+      "model_name": "Gradient_Boosting",
+      "accuracy": 0.7719,
+      "balanced_accuracy": 0.7324,
+      "precision": 0.8,
+      "recall_sensitivity": 0.8649,
+      "specificity": 0.6,
+      "f1_score": 0.8312,
+      "roc_auc": 0.8649,
+      "pr_auc": 0.9339,
+      "latency_ms": 0.083,
+      "confusion_matrix": [
+        [
+          12,
+          8
+        ],
+        [
+          5,
+          32
+        ]
+      ],
+      "model_size_kb": 204.74
+    },
+    {
+      "model_name": "Neural_Vision_MLP",
+      "accuracy": 0.7018,
+      "balanced_accuracy": 0.6784,
+      "precision": 0.7778,
+      "recall_sensitivity": 0.7568,
+      "specificity": 0.6,
+      "f1_score": 0.7671,
+      "roc_auc": 0.7581,
+      "pr_auc": 0.8874,
+      "latency_ms": 0.051,
+      "confusion_matrix": [
+        [
+          12,
+          8
+        ],
+        [
+          9,
+          28
+        ]
+      ],
+      "model_size_kb": 72.3
+    }
+  ],
+  "calibrated_model": {
+    "model_name": "Calibrated_Logistic_Regression",
+    "accuracy": 0.8596,
+    "balanced_accuracy": 0.823,
+    "precision": 0.8537,
+    "recall_sensitivity": 0.9459,
+    "specificity": 0.7,
+    "f1_score": 0.8974,
+    "roc_auc": 0.8865,
+    "pr_auc": 0.9283,
+    "latency_ms": 0.576,
+    "confusion_matrix": [
+      [
+        14,
+        6
+      ],
+      [
+        2,
+        35
+      ]
+    ],
+    "is_best_calibrated": true
+  },
+  "inconclusive_test_stats": {
+    "total_test_samples": 57,
+    "decisive_count": 47,
+    "inconclusive_count": 9,
+    "ood_count": 1
+  },
+  "top_features": [
+    {
+      "feature": "B_std",
+      "importance": 0.2014
+    },
+    {
+      "feature": "b_std",
+      "importance": 0.1169
+    },
+    {
+      "feature": "R_std",
+      "importance": 0.1019
+    },
+    {
+      "feature": "H_mean",
+      "importance": 0.0978
+    },
+    {
+      "feature": "b_mean",
+      "importance": 0.0723
+    },
+    {
+      "feature": "Blur_Score",
+      "importance": 0.0506
+    },
+    {
+      "feature": "G_std",
+      "importance": 0.0492
+    },
+    {
+      "feature": "a_std",
+      "importance": 0.0471
+    },
+    {
+      "feature": "V_std",
+      "importance": 0.0446
+    },
+    {
+      "feature": "Contrast_Std",
+      "importance": 0.0408
+    }
+  ]
+}

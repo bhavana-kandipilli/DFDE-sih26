@@ -1,0 +1,415 @@
+{
+  "metadata_summary": {
+    "sheet_names": [
+      "Sheet1"
+    ],
+    "sheets": {
+      "Sheet1": {
+        "rows": 526,
+        "columns": [
+          "code",
+          "nr",
+          "set",
+          "component",
+          "salt form",
+          "other",
+          "matrix",
+          "color"
+        ],
+        "null_count": 591
+      }
+    }
+  },
+  "raw_files_count": 24,
+  "total_raw_samples": 8035,
+  "avg_files_count": 24,
+  "total_avg_samples": 2003,
+  "raw_files_detail": [
+    {
+      "filename": "K_ASD.xlsx",
+      "rows": 177,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 3235.61
+    },
+    {
+      "filename": "K_MicroNIR.xlsx",
+      "rows": 264,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 323.81
+    },
+    {
+      "filename": "K_NeoSpectra.xlsx",
+      "rows": 264,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 569.71
+    },
+    {
+      "filename": "K_Scio.xlsx",
+      "rows": 165,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 594.56
+    },
+    {
+      "filename": "NCD_ASD.xlsx",
+      "rows": 113,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 2089.65
+    },
+    {
+      "filename": "NCD_MicroNIR.xlsx",
+      "rows": 282,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 347.75
+    },
+    {
+      "filename": "NCD_NIRONE.xlsx",
+      "rows": 285,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 558.13
+    },
+    {
+      "filename": "NCD_NeoSpectra.xlsx",
+      "rows": 282,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 605.9
+    },
+    {
+      "filename": "NCD_Scio.xlsx",
+      "rows": 404,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 1079.2
+    },
+    {
+      "filename": "PAM_ASD.xlsx",
+      "rows": 207,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 5819.03
+    },
+    {
+      "filename": "PAM_MicroNIR.xlsx",
+      "rows": 313,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 386.2
+    },
+    {
+      "filename": "PAM_NIRONE.xlsx",
+      "rows": 312,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 614.92
+    },
+    {
+      "filename": "PAM_NeoSpectra.xlsx",
+      "rows": 312,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 671.42
+    },
+    {
+      "filename": "PAM_Scio.xlsx",
+      "rows": 2230,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 8263.99
+    },
+    {
+      "filename": "P_ASD.xlsx",
+      "rows": 142,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 2660.33
+    },
+    {
+      "filename": "P_MicroNIR.xlsx",
+      "rows": 213,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 259.27
+    },
+    {
+      "filename": "P_NIRONE.xlsx",
+      "rows": 212,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 412.92
+    },
+    {
+      "filename": "P_NeoSpectra.xlsx",
+      "rows": 213,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 461.52
+    },
+    {
+      "filename": "P_Scio.xlsx",
+      "rows": 355,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 995.95
+    },
+    {
+      "filename": "T_ASD.xlsx",
+      "rows": 144,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 2744.69
+    },
+    {
+      "filename": "T_MicroNIR.xlsx",
+      "rows": 360,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 402.23
+    },
+    {
+      "filename": "T_NIRONE.xlsx",
+      "rows": 209,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 418.49
+    },
+    {
+      "filename": "T_NeoSpectra.xlsx",
+      "rows": 217,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 471.46
+    },
+    {
+      "filename": "T_Scio.xlsx",
+      "rows": 360,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 1492.13
+    }
+  ],
+  "avg_files_detail": [
+    {
+      "filename": "K_Avg_ASD.xlsx",
+      "rows": 88,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 1613.61
+    },
+    {
+      "filename": "K_Avg_MicroNIR.xlsx",
+      "rows": 88,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 115.51
+    },
+    {
+      "filename": "K_Avg_NeoSpectra.xlsx",
+      "rows": 88,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 134.91
+    },
+    {
+      "filename": "K_Avg_Scio.xlsx",
+      "rows": 33,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 94.81
+    },
+    {
+      "filename": "NCD_Avg_ASD.xlsx",
+      "rows": 54,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 1008.06
+    },
+    {
+      "filename": "NCD_Avg_MicroNIR.xlsx",
+      "rows": 90,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 118.04
+    },
+    {
+      "filename": "NCD_Avg_NIRONE.xlsx",
+      "rows": 95,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 166.51
+    },
+    {
+      "filename": "NCD_Avg_NeoSpectra.xlsx",
+      "rows": 94,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 143.02
+    },
+    {
+      "filename": "NCD_Avg_Scio.xlsx",
+      "rows": 61,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 168.45
+    },
+    {
+      "filename": "PAM_Avg_ASD.xlsx",
+      "rows": 105,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 2084.89
+    },
+    {
+      "filename": "PAM_Avg_MicroNIR.xlsx",
+      "rows": 104,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 135.17
+    },
+    {
+      "filename": "PAM_Avg_NIRONE.xlsx",
+      "rows": 104,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 183.18
+    },
+    {
+      "filename": "PAM_Avg_NeoSpectra.xlsx",
+      "rows": 104,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 157.92
+    },
+    {
+      "filename": "PAM_Avg_Scio.xlsx",
+      "rows": 182,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 512.37
+    },
+    {
+      "filename": "P_Avg_ASD.xlsx",
+      "rows": 71,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 1338.43
+    },
+    {
+      "filename": "P_Avg_MicroNIR.xlsx",
+      "rows": 71,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 93.62
+    },
+    {
+      "filename": "P_Avg_NIRONE.xlsx",
+      "rows": 71,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 124.75
+    },
+    {
+      "filename": "P_Avg_NeoSpectra.xlsx",
+      "rows": 71,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 111.08
+    },
+    {
+      "filename": "P_Avg_Scio.xlsx",
+      "rows": 71,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 209.5
+    },
+    {
+      "filename": "T_Avg_ASD.xlsx",
+      "rows": 72,
+      "cols": 2152,
+      "numeric_cols": 2151,
+      "null_count": 0,
+      "size_kb": 1380.05
+    },
+    {
+      "filename": "T_Avg_MicroNIR.xlsx",
+      "rows": 71,
+      "cols": 126,
+      "numeric_cols": 125,
+      "null_count": 0,
+      "size_kb": 85.87
+    },
+    {
+      "filename": "T_Avg_NIRONE.xlsx",
+      "rows": 71,
+      "cols": 202,
+      "numeric_cols": 201,
+      "null_count": 0,
+      "size_kb": 129.46
+    },
+    {
+      "filename": "T_Avg_NeoSpectra.xlsx",
+      "rows": 72,
+      "cols": 161,
+      "numeric_cols": 160,
+      "null_count": 0,
+      "size_kb": 113.32
+    },
+    {
+      "filename": "T_Avg_Scio.xlsx",
+      "rows": 72,
+      "cols": 332,
+      "numeric_cols": 331,
+      "null_count": 0,
+      "size_kb": 207.98
+    }
+  ]
+}

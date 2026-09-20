@@ -1,0 +1,96 @@
+{
+  "timestamp": "2026-09-20T06:49:40Z",
+  "environment": "macOS / Python 3.13 / FastAPI / SQLite-PostgreSQL Ready",
+  "preprocessing_latency": {
+    "iterations": 30,
+    "mean_ms": 2.69,
+    "median_ms": 2.52,
+    "min_ms": 2.4,
+    "max_ms": 7.08,
+    "p95_ms": 2.85,
+    "p99_ms": 5.86
+  },
+  "inference_latency": {
+    "iterations": 30,
+    "mean_ms": 10.84,
+    "median_ms": 8.63,
+    "min_ms": 8.07,
+    "max_ms": 73.48,
+    "p95_ms": 10.12,
+    "p99_ms": 55.36
+  },
+  "api_latency": {
+    "auth_login": {
+      "iterations": 15,
+      "mean_ms": 187.99,
+      "median_ms": 187.25,
+      "min_ms": 186.81,
+      "max_ms": 198.38,
+      "p95_ms": 191.2,
+      "p99_ms": 196.94
+    },
+    "case_creation": {
+      "iterations": 15,
+      "mean_ms": 4.75,
+      "median_ms": 4.19,
+      "min_ms": 3.93,
+      "max_ms": 11.65,
+      "p95_ms": 6.85,
+      "p99_ms": 10.69
+    },
+    "test_creation": {
+      "iterations": 15,
+      "mean_ms": 5.08,
+      "median_ms": 4.34,
+      "min_ms": 3.96,
+      "max_ms": 12.34,
+      "p95_ms": 7.69,
+      "p99_ms": 11.41
+    },
+    "evidence_upload": {
+      "iterations": 15,
+      "mean_ms": 8.43,
+      "median_ms": 8.07,
+      "min_ms": 7.62,
+      "max_ms": 12.18,
+      "p95_ms": 10.62,
+      "p99_ms": 11.87
+    },
+    "evidence_analyze": {
+      "iterations": 15,
+      "mean_ms": 14.63,
+      "median_ms": 14.46,
+      "min_ms": 13.55,
+      "max_ms": 17.94,
+      "p95_ms": 16.14,
+      "p99_ms": 17.58
+    },
+    "certificate_export": {
+      "iterations": 15,
+      "mean_ms": 2.67,
+      "median_ms": 2.56,
+      "min_ms": 2.37,
+      "max_ms": 4.04,
+      "p95_ms": 3.24,
+      "p99_ms": 3.88
+    }
+  },
+  "upload_time": {
+    "iterations": 15,
+    "mean_ms": 8.43,
+    "median_ms": 8.07,
+    "min_ms": 7.62,
+    "max_ms": 12.18,
+    "p95_ms": 10.62,
+    "p99_ms": 11.87
+  },
+  "synchronization_time": {
+    "iterations": 15,
+    "mean_ms": 5.21,
+    "median_ms": 4.88,
+    "min_ms": 4.38,
+    "max_ms": 7.42,
+    "p95_ms": 7.03,
+    "p99_ms": 7.35
+  }
+}

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFDE - Forensic Laboratory Verification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2026_med">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SCREEN 1: ANALYST LOGIN (Forensic Laboratory Portal)
+       ========================================================================== -->
+  <div id="viewLogin" class="login-page-container">
+    <!-- Brand Header -->
+    <div class="login-brand-header">
+      <div class="login-logo-row">
+        <svg class="login-logo-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+        </svg>
+        <span class="login-logo-title">DFDE</span>
+      </div>
+      <div class="login-app-title">Digital Field Drug Evidence</div>
+      <div class="login-app-motto">Forensic Analysis • Evidence Verification & Chain of Custody</div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+      <h2 class="login-card-title">Forensic Analyst Login</h2>
+      <p class="login-card-subtitle">Authorized Forensic Laboratory Evidence Verification</p>
+
+      <form id="formLogin">
+        <!-- Analyst ID input with icon -->
+        <div class="input-icon-group">
+          <svg class="input-leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" id="loginAnalystId" class="input-with-icon" value="analyst1" placeholder="Analyst ID / Chemist Number" required autocomplete="username">
+        </div>
+
+        <!-- Password input with icon and toggle -->
+        <div class="input-icon-group">
+          <svg class="input-leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="loginPassword" class="input-with-icon" value="analystpass123" placeholder="Password" required autocomplete="current-password">
+          <button type="button" class="input-trailing-action" id="btnTogglePassword" title="Toggle password visibility">
+            <svg id="pwdEyeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-login-submit">Login</button>
+
+        <div class="login-security-notice">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+          </svg>
+          <span>Forensic Chemistry & Laboratory Division</span>
+        </div>
+
+        <div class="login-quick-links">
+          <button type="button" class="btn-quick-fill" onclick="analystApp.fillCredentials('analyst1', 'analystpass123')">
+            Quick Fill: analyst1 (Forensic Chemist)
+          </button>
+          <div>
+            <a href="index.html" class="portal-switch-text">← Switch to Field Officer Capture App</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Gentle Wave Graphic at bottom (Medical Blues) -->
+    <svg class="login-wave-bg" viewBox="0 0 1440 170" fill="none" preserveAspectRatio="none">
+      <path d="M0 60C240 120 480 20 720 70C960 120 1200 30 1440 80V170H0V60Z" fill="#E0F2FE" opacity="0.85"/>
+      <path d="M0 90C360 40 720 140 1080 70C1260 35 1380 60 1440 80V170H0V90Z" fill="#BAE6FD" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <!-- ==========================================================================
+       AUTHENTICATED ANALYST APP SHELL (Sidebar + Top Bar + Views)
+       ========================================================================== -->
+  <div id="appMainLayout" class="app-layout hidden">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="app-sidebar">
+      <a href="#" class="sidebar-brand" onclick="analystApp.navTo('viewDashboard'); return false;">
+        <svg class="sidebar-logo-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm1 14h-2v-3H8v-2h3V8h2v3h3v2h-3v3z"/>
+        </svg>
+        <span class="sidebar-logo-text">DFDE</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-item active" id="navDashboard" onclick="analystApp.navTo('viewDashboard'); return false;">
+          <span class="sidebar-item-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navCases" onclick="analystApp.navTo('viewCasesList'); return false;">
+          <span class="sidebar-item-icon">📁</span>
+          <span>Cases</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navEvidence" onclick="analystApp.navTo('viewEvidenceList'); return false;">
+          <span class="sidebar-item-icon">🖼️</span>
+          <span>Evidence</span>
+        </a>
+        <a href="#" class="sidebar-item" id="navProfile" onclick="analystApp.navTo('viewProfile'); return false;">
+          <span class="sidebar-item-icon">👤</span>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" class="sidebar-portal-link" title="Switch to Field Officer App">← Field Officer App</a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-left-block">
+          <span class="status-pill-badge verified" style="font-size: 0.75rem;">🔬 FORENSIC EVIDENCE LABORATORY</span>
+        </div>
+
+        <div class="header-right-block">
+          <div class="user-profile-widget" style="cursor: pointer;" onclick="analystApp.navTo('viewProfile')" title="View Analyst Profile">
+            <div class="user-avatar-circle" id="userAvatarInitials">FA</div>
+            <div class="user-meta-column">
+              <span class="user-display-name" id="analystDisplayName">Analyst</span>
+              <span class="user-badge-id" id="analystDeptDisplay">Forensic Division</span>
+            </div>
+          </div>
+          <button id="btnLogout" class="btn-header-logout" type="button" title="Log out of session">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+
+        <!-- ==========================================================================
+             SCREEN 3: FORENSIC ANALYST DASHBOARD (Clean & Clear)
+             ========================================================================== -->
+        <section id="viewDashboard" class="view-panel active">
+          
+          <!-- Hero Header -->
+          <div class="dashboard-hero">
+            <h1 class="dashboard-title">Forensic Analyst Dashboard</h1>
+            <p class="dashboard-subtitle">Review field evidence and generate digital certificates.</p>
+          </div>
+
+          <!-- 3 Stat Cards Row -->
+          <div class="stats-row-grid">
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper blue">
+                📄
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statTotalCases">0</div>
+                <div class="stat-label-text">Total Cases</div>
+              </div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper amber">
+                🕒
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statPendingReview">0</div>
+                <div class="stat-label-text">Pending Review</div>
+              </div>
+            </div>
+
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper green">
+                
+              </div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statVerified">0</div>
+                <div class="stat-label-text">Verified</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="search-container-box">
+            <input type="text" id="inputSearch" class="search-input-field" placeholder="Search by Case ID, location, or date...">
+            <span class="search-icon-btn">🔍</span>
+          </div>
+
+          <!-- Recent Cases Section Header -->
+          <div class="section-header-row">
+            <h2 class="section-heading-text">Recent Cases</h2>
+            <a href="#" class="section-link-action" onclick="analystApp.navTo('viewCasesList'); return false;">View All →</a>
+          </div>
+
+          <!-- Table Container -->
+          <div class="clean-table-card">
+            <table class="data-table" id="casesTable">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Date</th>
+                  <th>Result</th>
+                  <th>Integrity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="casesTbody">
+                <!-- Dynamically populated from real DB -->
+              </tbody>
+            </table>
+
+            <!-- Honest Empty State -->
+            <div id="casesEmptyState" class="clean-empty-state hidden">
+              <div class="empty-state-icon">🔬</div>
+              <h3 class="empty-state-title">No submitted cases yet</h3>
+              <p class="empty-state-desc">Cases submitted by field officers will appear here for forensic laboratory review.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             ANALYST VIEW: MASTER CASES REPOSITORY
+             ========================================================================== -->
+        <section id="viewCasesList" class="view-panel hidden">
+          <div class="dashboard-hero" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div>
+              <h1 class="dashboard-title">Forensic Case Repository</h1>
+              <p class="dashboard-subtitle">Master investigative registry of all cases submitted for laboratory verification.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="analystApp.navTo('viewDashboard')">← Back to Dashboard</button>
+          </div>
+
+          <!-- Search & Filter Bar -->
+          <div class="search-container-box" style="margin-bottom: 1.25rem;">
+            <input type="text" id="analystCasesSearch" class="search-input-field" placeholder="Filter cases by case reference, location, or notes..." oninput="analystApp.filterCasesList(this.value)">
+            <span class="search-icon-btn">🔍</span>
+          </div>
+
+          <!-- Cases Table -->
+          <div class="clean-table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Presumptive Result</th>
+                  <th>Integrity Score</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="allCasesListTbody">
+                <!-- Dynamically populated from real DB -->
+              </tbody>
+            </table>
+            
+            <div id="allCasesEmptyState" class="clean-empty-state hidden">
+              <div class="empty-state-icon">📁</div>
+              <h3 class="empty-state-title">No cases found</h3>
+              <p class="empty-state-desc">No case records matching your query.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             ANALYST VIEW: OPTICAL EVIDENCE REPOSITORY
+             ========================================================================== -->
+        <section id="viewEvidenceList" class="view-panel hidden">
+          <div class="dashboard-hero" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div>
+              <h1 class="dashboard-title">Optical Evidence Repository</h1>
+              <p class="dashboard-subtitle">Presumptive chemical test evidence, colorimetric reactions, and cryptographic digests.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="analystApp.navTo('viewDashboard')">← Back to Dashboard</button>
+          </div>
+
+          <!-- Summary Metric Cards -->
+          <div class="stats-row-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper blue">🔬</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statTotalEvidence">0</div>
+                <div class="stat-label-text">Total Evidence Records</div>
+              </div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper green">🛡️</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statVerifiedDigests">0</div>
+                <div class="stat-label-text">Cryptographically Verified</div>
+              </div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-icon-wrapper amber">🧪</div>
+              <div class="stat-info-meta">
+                <div class="stat-number-value" id="statReagentsTested">0</div>
+                <div class="stat-label-text">Reagents Evaluated</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evidence Table Card -->
+          <div class="clean-table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Evidence ID</th>
+                  <th>Case Ref</th>
+                  <th>Chemical Reagent</th>
+                  <th>Presumptive Result</th>
+                  <th>Confidence</th>
+                  <th>Integrity Score</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="evidenceListTbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+
+            <div id="evidenceEmptyState" class="clean-empty-state hidden">
+              <div class="empty-state-icon">🖼️</div>
+              <h3 class="empty-state-title">No evidence records available</h3>
+              <p class="empty-state-desc">Evidence submitted by field officers will appear here for optical verification.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             ANALYST VIEW: PROFILE & LABORATORY ACCREDITATION
+             ========================================================================== -->
+        <section id="viewProfile" class="view-panel hidden">
+          <div class="workflow-card" style="max-width: 680px; margin: 0 auto;">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title">Forensic Analyst Profile</h2>
+                <p class="workflow-card-subtitle">Credentials & Laboratory Verification Authority</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="analystApp.navTo('viewDashboard')">← Back to Dashboard</button>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: var(--radius-md); padding: 1.25rem;">
+              <div class="user-avatar-circle" style="width: 64px; height: 64px; font-size: 1.5rem;" id="profAvatarInitials">--</div>
+              <div>
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);" id="profName">--</h3>
+                <div style="color: var(--color-primary); font-weight: 700; font-size: 0.85rem;" id="profBadge">--</div>
+                <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.2rem;" id="profAgency">--</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Role & Permissions</div>
+                <div style="font-size: 1rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">FORENSIC_ANALYST</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Digital Certificate Signer</div>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Accreditation Standard</div>
+                <div style="font-size: 1rem; font-weight: 800; color: var(--status-positive-text); margin-top: 0.25rem;">ISO/IEC 17025</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Forensic Chemistry Protocol</div>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Cryptographic Signer</div>
+                <div style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">ECDSA / SHA-256</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Hardware Vault Key Validated</div>
+              </div>
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Session Protocol</div>
+                <div style="font-size: 1rem; font-weight: 800; color: var(--status-positive-text); margin-top: 0.25rem;">TLS 1.3 Strict</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Encrypted Web Session</div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+              <a href="index.html" class="portal-switch-text" style="font-size: 0.88rem; font-weight: 600;">← Switch to Field Officer Capture App</a>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary" onclick="analystApp.navTo('viewDashboard')">← Back to Dashboard</button>
+                <button class="btn btn-secondary" onclick="analystApp.handleLogout()" style="color: var(--color-danger); border-color: #FECACA;">Logout</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             ANALYST WORKFLOW: CASE VIEW
+             ========================================================================== -->
+        <section id="viewCaseDetails" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title" id="caseDetailsTitle">Case Details</h2>
+                <p class="workflow-card-subtitle">Case Information & Optical Evidence</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="analystApp.navTo('viewDashboard')">← Back to Dashboard</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">OFFICER</span>
+                <div id="detOfficer" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">DATE / TIME</span>
+                <div id="detDate" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">LOCATION</span>
+                <div id="detLocation" style="font-weight: 600;">--</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">STATUS</span>
+                <div id="detStatus"><span class="status-pill-badge synced">ACTIVE</span></div>
+              </div>
+            </div>
+
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem;">Evidence Records</h3>
+            <div id="detEvidenceContainer" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Evidence items list -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             ANALYST WORKFLOW: MULTI-PLANE EVIDENCE VIEWER & VERIFICATION
+             ========================================================================== -->
+        <section id="viewEvidenceViewer" class="view-panel hidden">
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <div>
+                <h2 class="workflow-card-title" id="evViewerTitle">Evidence Verification</h2>
+                <p class="workflow-card-subtitle" id="evViewerSubtitle">Multi-plane colorimetry, AI classification, & cryptographic integrity</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="analystApp.backFromEvidenceViewer()">← Back</button>
+            </div>
+
+            <!-- Multi-plane Images -->
+            <div class="evidence-images-grid">
+              <div class="evidence-thumb-card">
+                <img id="evImgRaw" alt="Raw Optical Capture">
+                <div class="evidence-thumb-label">Original Field Capture</div>
+              </div>
+              <div class="evidence-thumb-card">
+                <img id="evImgCalib" alt="Calibrated Optical Capture">
+                <div class="evidence-thumb-label">Color-Calibrated Image</div>
+              </div>
+              <div class="evidence-thumb-card">
+                <img id="evImgPatch" alt="Reaction Zone">
+                <div class="evidence-thumb-label">Reaction Region (12 Lanes)</div>
+              </div>
+            </div>
+
+            <!-- Analysis & Integrity Summary -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">PRESUMPTIVE RESULT</span>
+                <div id="evClassification" style="font-size: 1.25rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">--</div>
+                <div id="evSubstanceName" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">--</div>
+              </div>
+
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">CALIBRATED CONFIDENCE</span>
+                <div id="evConfidence" style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-top: 0.25rem;">--%</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Platt scaled probability</div>
+              </div>
+
+              <div style="background: var(--border-subtle); padding: 1rem; border-radius: var(--radius-md);">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">INTEGRITY SCORE</span>
+                <div id="evIntegrityScore" style="font-size: 1.5rem; font-weight: 800; color: var(--status-positive-text); margin-top: 0.25rem;">--</div>
+                <div id="evIntegrityStatus" style="font-size: 0.75rem; font-weight: 700; color: var(--status-positive-text);">HIGH INTEGRITY</div>
+              </div>
+            </div>
+
+            <!-- Cryptographic Verification Box -->
+            <div style="background: #ffffff; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">SHA-256 Cryptographic Digest</span>
+                <button id="btnVerifyNow" class="btn btn-sm btn-primary" type="button">Verify Cryptographic Hash</button>
+              </div>
+              <div class="hash-box" id="evSha256Box">--</div>
+              <div id="evHashVerificationNotice" class="hidden" style="color: var(--status-positive-text); font-weight: 700; font-size: 0.85rem; margin-top: 0.5rem;">
+                ✓ HASH MATCH: Cryptographic integrity confirmed against original upload digest.
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+              <button id="btnGenerateCert" class="btn btn-primary" type="button">
+                📜 Generate Digital Certificate
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             MODAL: OFFICIAL DIGITAL EVIDENCE CERTIFICATE (Clean PDF / Print View)
+             ========================================================================== -->
+        <div id="modalCertificate" class="modal-overlay">
+          <div class="modal-box" style="max-width: 680px;">
+            <button class="modal-close" onclick="analystApp.closeCertificateModal()">&times;</button>
+            
+            <div id="certPrintArea">
+              <!-- Official Certificate Header -->
+              <div style="border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-size: 1.2rem; font-weight: 800; color: var(--color-primary); letter-spacing: 0.04em;">DIGITAL FIELD DRUG EVIDENCE SYSTEM</div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Official Forensic Evidence Examination Report</div>
+                </div>
+                <div style="border: 2px solid var(--color-success); background: var(--status-positive-bg); padding: 0.4rem 0.75rem; font-size: 0.75rem; font-weight: 800; color: var(--color-success); text-transform: uppercase; border-radius: 6px;">
+                  ✓ AUTHENTICATED
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
+                <div><strong>Certificate ID:</strong> <span id="certId" class="font-mono">--</span></div>
+                <div><strong>Issued Date:</strong> <span id="certDate">--</span></div>
+                <div><strong>Case Reference:</strong> <span id="certCaseRef" class="font-mono">--</span></div>
+                <div><strong>Field Officer:</strong> <span id="certOfficer">--</span></div>
+                <div><strong>Location:</strong> <span id="certLocation">--</span></div>
+                <div><strong>Test Reagent:</strong> <span id="certReagent">--</span></div>
+              </div>
+
+              <!-- Result Callout -->
+              <div style="background: #F0F9FF; border: 1px solid var(--border-color); border-left: 4px solid var(--color-primary); padding: 0.85rem 1rem; border-radius: 6px; margin-bottom: 1.25rem;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Automated Presumptive Classification</div>
+                <div id="certResultText" style="font-size: 1.25rem; font-weight: 800; color: var(--color-primary);">--</div>
+                <div style="font-size: 0.85rem; color: var(--text-main);">Calibrated Confidence: <strong id="certConfidence">--%</strong></div>
+              </div>
+
+              <!-- Chain of Custody & Hash -->
+              <div style="margin-bottom: 1.25rem; font-size: 0.82rem;">
+                <div style="font-weight: 700; margin-bottom: 0.35rem; color: var(--text-main);">Cryptographic Proof of Authenticity:</div>
+                <div class="hash-box" id="certSha256" style="font-size: 0.75rem;">--</div>
+                <div style="color: var(--status-positive-text); font-weight: 700;">✓ Evidence Integrity Score: <span id="certIntegrityScore">--</span>/100</div>
+              </div>
+
+              <!-- Legal Disclaimer -->
+              <div class="statutory-disclaimer" style="margin: 1rem 0; font-size: 0.78rem;">
+                <strong>⚖️ LEGAL NOTICE:</strong> This digital evidence certificate records the automated colorimetric analysis of a field presumptive chemical test. This output is presumptive and non-confirmatory. Confirmatory laboratory analysis by Gas Chromatography-Mass Spectrometry (GC-MS) or Liquid Chromatography-Mass Spectrometry (LC-MS) remains legally required for court submission.
+              </div>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+              <button type="button" class="btn btn-secondary" onclick="window.print()">🖨️ Print Certificate</button>
+              <button type="button" id="btnDownloadCertJson" class="btn btn-primary">⬇️ Download Certificate JSON</button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="analyst.js?v=2026_real_data"></script>
+</body>
+</html>

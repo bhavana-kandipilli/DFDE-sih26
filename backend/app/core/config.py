@@ -10,6 +10,10 @@ def _is_serverless_runtime() -> bool:
     )
 
 
+def _writable_temp_dir() -> str:
+    return "/tmp/digital-field-drug-evidence-storage"
+
+
 class Settings:
     PROJECT_NAME: str = "Digital Field Drug Evidence System"
     VERSION: str = "1.0.0"
@@ -21,21 +25,23 @@ class Settings:
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "480"))  # 8 hours
 
-    # Database: Default to a writable serverless-safe SQLite file. Local dev retains repo-local defaults.
-    _default_database_url = os.getenv(
-        "DATABASE_URL",
-        "sqlite:////tmp/digital_field_drug_evidence.db" if _is_serverless_runtime() else "sqlite:///./storage/evidence.db",
-    )
-    DATABASE_URL: str = _default_database_url
+    # Database: use writable serverless-safe SQLite defaults; local dev retains repo-local defaults.
+    if os.getenv("DATABASE_URL"):
+        DATABASE_URL: str = os.getenv("DATABASE_URL")
+    elif _is_serverless_runtime():
+        DATABASE_URL = "sqlite:////tmp/digital_field_drug_evidence.db"
+    else:
+        DATABASE_URL = "sqlite:///./storage/evidence.db"
 
-    # Object Storage Directory
-    _default_storage_dir = (
-        os.getenv("STORAGE_DIR", "/tmp/digital-field-drug-evidence-storage")
-        if _is_serverless_runtime()
-        else os.getenv("STORAGE_DIR", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "storage")))
+    # Object Storage Directory: always prefer a writable path in serverless runtimes.
+    STORAGE_DIR = os.getenv("STORAGE_DIR") or (
+        _writable_temp_dir() if _is_serverless_runtime() else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "storage"))
     )
-    STORAGE_DIR: str = _default_storage_dir
-    os.makedirs(STORAGE_DIR, exist_ok=True)
+    try:
+        os.makedirs(STORAGE_DIR, exist_ok=True)
+    except OSError:
+        STORAGE_DIR = _writable_temp_dir()
+        os.makedirs(STORAGE_DIR, exist_ok=True)
 
     # Quality & Rate Limiting Controls
     MIN_LAPLACIAN_VAR: float = float(os.getenv("MIN_LAPLACIAN_VAR", "100.0"))

@@ -1,0 +1,10 @@
+{
+  "installCommand": "pip install --disable-pip-version-check -r requirements.vercel.txt",
+  "buildCommand": "python -m compileall backend api ml || true",
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": "ml/models/**",
+      "excludeFiles": "{storage/**,tests/**,scripts/**,docs/**,ml/training/**,ml/evaluation/**,database/**,mobile/**,offline/**,docker/**,.git/**,**/*.md,**/*.csv,**/*.png,**/*.jpg,**/*.jpeg,**/*.bmp,**/*.gif,**/*.svg}"
+    }
+  }
+}

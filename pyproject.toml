@@ -3,7 +3,7 @@ name = "digital-field-drug-evidence"
 version = "1.0.0"
 description = "Digital Field Drug Evidence System (DFDE) - FastAPI Backend"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.22.0",

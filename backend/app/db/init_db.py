@@ -1,11 +1,33 @@
 import logging
+import os
 from backend.app.db.session import engine, Base, SessionLocal
 from backend.app.db.models import User, ModelVersion
+from backend.app.core.config import settings
 from backend.app.core.security import hash_password
 
 logger = logging.getLogger("forensic_db")
 
+
+def _ensure_parent_dir(db_url: str) -> None:
+    if not db_url.startswith("sqlite://"):
+        return
+
+    if db_url.startswith("sqlite:///"):
+        db_path = db_url.replace("sqlite:///", "", 1)
+    elif db_url.startswith("sqlite://"):
+        db_path = db_url.replace("sqlite://", "", 1)
+    else:
+        return
+
+    parent = (
+        os.path.dirname(os.path.abspath(db_path)) if not db_path.startswith("/") else os.path.dirname(db_path)
+    )
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+
+
 def init_db():
+    _ensure_parent_dir(settings.DATABASE_URL)
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
 

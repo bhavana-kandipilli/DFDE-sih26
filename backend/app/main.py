@@ -18,7 +18,14 @@ from backend.app.services.calibration_service import CalibrationService
 from ml.inference import PresumptiveInferenceEngine
 from backend.app.core.security import calculate_sha256, generate_hmac_signature
 
-inference_engine = PresumptiveInferenceEngine()
+_inference_engine = None
+
+
+def get_inference_engine():
+    global _inference_engine
+    if _inference_engine is None:
+        _inference_engine = PresumptiveInferenceEngine()
+    return _inference_engine
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -127,6 +134,7 @@ async def calibrate_and_analyze_legacy(
     calibrated_full_path = os.path.join(settings.STORAGE_DIR, calib_res["calibrated_storage_path"])
 
     t0 = time.time()
+    inference_engine = get_inference_engine()
     ai_res = inference_engine.predict(calibrated_full_path)
     latency_ms = round((time.time() - t0) * 1000.0, 2)
 
